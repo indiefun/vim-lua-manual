@@ -186,14 +186,20 @@
 
   2.1.  assert ~
                                                 *lua.assert*
+>
+    assert (v [, message])
+<
     Issues an error when the value of its argument v is false (i.e., `nil` or
     `false`); otherwise, returns all its arguments. message is an error message;
     when absent, it defaults to "assertion failed!"
 
   2.2.  collectgarbage ~
                                                 *lua.collectgarbage*
-     This function is a generic interface to the garbage collector. It
-     performs different functions according to its first argument, opt:
+>
+    collectgarbage ([opt [, arg]])
+<
+    This function is a generic interface to the garbage collector. It
+    performs different functions according to its first argument, opt:
 
         `"collect"`: performs a full garbage-collection cycle. This is the
         default option.
@@ -237,6 +243,9 @@
 
   2.3.  dofile ~
                                                 *lua.dofile*
+>
+    dofile ([filename])
+<
     Opens the named file and executes its contents as a Lua chunk. When called
     without arguments, dofile executes the contents of the standard input
     (stdin). Returns all values returned by the chunk. In case of errors,
@@ -245,6 +254,9 @@
 
   2.4.  error ~
                                                 *lua.error*
+>
+    error (message [, level])
+<
     Terminates the last protected function called and returns message as the
     error message. Function error never returns.
 
@@ -258,74 +270,387 @@
 
   2.5.  getmetatable ~
                                                 *lua.getmetatable*
+>
+    getmetatable (object)
+<
     If object does not have a metatable, returns nil. Otherwise, if the
     object's metatable has a "__metatable" field, returns the associated
     value. Otherwise, returns the metatable of the given object.
 
   2.6.  ipairs ~
                                                 *lua.ipairs*
+>
+    ipairs (t)
+<
+    If t has a metamethod __ipairs, calls it with t as argument and returns
+    the first three results from the call.
+
+    Otherwise, returns three values: an iterator function, the table t, and 0,
+    so that the construction
+>
+        for i,v in ipairs(t) do body end
+<
+    will iterate over the pairs (1,t[1]), (2,t[2]), ..., up to the first
+    integer key absent from the table.
 
   2.7.  load ~
                                                 *lua.load*
+>
+    load (ld [, source [, mode [, env]]])
+<
+    Loads a chunk.
+
+    If ld is a string, the chunk is this string. If ld is a function, load
+    calls it repeatedly to get the chunk pieces. Each call to ld must return a
+    string that concatenates with previous results. A return of an empty
+    string, nil, or no value signals the end of the chunk.
+
+    If there are no syntactic errors, returns the compiled chunk as a
+    function; otherwise, returns nil plus the error message.
+
+    If the resulting function has upvalues, the first upvalue is set to the
+    value of env, if that parameter is given, or to the value of the global
+    environment. (When you load a main chunk, the resulting function will
+    always have exactly one upvalue, the _ENV variable (see
+    `http://www.lua.org/manual/5.2/manual.html#2.2`). When you load a binary
+    chunk created from a function (see |lua.string.dump|), the resulting
+    function can have arbitrary upvalues.)
+
+    source is used as the source of the chunk for error messages and debug
+    information (see `http://www.lua.org/manual/5.2/manual.html#4.9`). When
+    absent, it defaults to ld, if ld is a string, or to "=(load)" otherwise.
+
+    The string mode controls whether the chunk can be text or binary (that is,
+    a precompiled chunk). It may be the string "b" (only binary chunks), "t"
+    (only text chunks), or "bt" (both binary and text). The default is "bt".
+
   2.8.  loadfile ~
                                                 *lua.loadfile*
+>
+    loadfile ([filename [, mode [, env]]])
+<
+    Similar to |lua.load|, but gets the chunk from file filename or from the
+    standard input, if no file name is given.
+
   2.9.  next ~
                                                 *lua.next*
+>
+    next (table [, index])
+<
+    Allows a program to traverse all fields of a table. Its first argument is
+    a table and its second argument is an index in this table. next returns
+    the next index of the table and its associated value. When called with
+    `nil` as its second argument, next returns an initial index and its
+    associated value. When called with the last index, or with `nil` in an
+    empty table, next returns `nil`. If the second argument is absent, then it
+    is interpreted as `nil`. In particular, you can use next(t) to check
+    whether a table is empty.
+
   2.10. pairs ~
                                                 *lua.pairs*
+>
+    pairs (t)
+<
+    If t has a metamethod __pairs, calls it with t as argument and returns the
+    first three results from the call.
+
+    Otherwise, returns three values: the |lua.next| function, the table t, and
+    nil, so that the construction
+>
+        for k,v in pairs(t) do body end
+<
+    will iterate over all key–value pairs of table t.
+
+    See function |lua.next| for the caveats of modifying the table during its
+    traversal.
+
   2.11. pcall ~
                                                 *lua.pcall*
+>
+    pcall (f [, arg1, ···])
+<
+    Calls function f with the given arguments in protected mode. This means
+    that any error inside f is not propagated; instead, pcall catches the
+    error and returns a status code. Its first result is the status code (a
+    boolean), which is true if the call succeeds without errors. In such case,
+    pcall also returns all results from the call, after this first result. In
+    case of any error, pcall returns `false` plus the error message.
+
   2.12. print ~
                                                 *lua.print*
+>
+    print (···)
+<
+    Receives any number of arguments and prints their values to stdout, using
+    the |lua.tostring| function to convert each argument to a string. print is
+    not intended for formatted output, but only as a quick way to show a
+    value, for instance for debugging. For complete control over the output,
+    use |lua.string.format| and |lua.io.write|.
+
   2.13. rawequal ~
                                                 *lua.rawequal*
+>
+    rawequal (v1, v2)
+<
+    Checks whether v1 is equal to v2, without invoking any metamethod. Returns
+    a boolean.
+
   2.14. rawget ~
                                                 *lua.rawget*
+>
+    rawget (table, index)
+<
+    Gets the real value of table[index], without invoking any metamethod.
+    table must be a table; index may be any value.
+
   2.15. rawlen ~
                                                 *lua.rawlen*
+>
+    rawlen (v)
+<
+    Returns the length of the object v, which must be a table or a string,
+    without invoking any metamethod. Returns an integer number.
+
   2.16. rawset ~
                                                 *lua.rawset*
+>
+    rawset (table, index, value)
+<
+    Sets the real value of table[index] to value, without invoking any
+    metamethod. table must be a table, index any value different from nil and
+    NaN, and value any Lua value.
+
+    This function returns table.
+
   2.17. require ~
                                                 *lua.require*
+>
+    require (modname)
+<
+    Loads the given module. The function starts by looking into the
+    |lua.package.loaded| table to determine whether modname is already loaded.
+    If it is, then require returns the value stored at
+    package.loaded[modname]. Otherwise, it tries to find a loader for the
+    module.
+
+    To find a loader, require is guided by the |lua.package.searchers|
+    sequence. By changing this sequence, we can change how require looks for a
+    module. The following explanation is based on the default configuration
+    for |lua.package.searchers|.
+
+    First require queries |lua.package.preload|[modname]. If it has a value,
+    this value (which should be a function) is the loader. Otherwise require
+    searches for a Lua loader using the path stored in |lua.package.path|. If
+    that also fails, it searches for a C loader using the path stored in
+    |lua.package.cpath|. If that also fails, it tries an all-in-one loader
+    (see |lua.package.searchers|).
+
+    Once a loader is found, require calls the loader with two arguments:
+    modname and an extra value dependent on how it got the loader. (If the
+    loader came from a file, this extra value is the file name.) If the loader
+    returns any non-nil value, require assigns the returned value to
+    |lua.package.loaded|[modname]. If the loader does not return a non-nil
+    value and has not assigned any value to |lua.package.loaded|[modname],
+    then require assigns `true` to this entry. In any case, require returns
+    the final value of |lua.package.loaded|[modname].
+
+    f there is any error loading or running the module, or if it cannot find
+    any loader for the module, then require raises an error.
+
   2.18. select ~
                                                 *lua.select*
+>
+    select (index, ···)
+<
+     If index is a number, returns all arguments after argument number index;
+     a negative number indexes from the end (-1 is the last argument).
+     Otherwise, index must be the string "#", and select returns the total
+     number of extra arguments it received.
+
   2.19. setmetatable ~
                                                 *lua.setmetatable*
+>
+    setmetatable (table, metatable)
+<
+    Sets the metatable for the given table. (You cannot change the metatable
+    of other types from Lua, only from C.) If metatable is `nil`, removes the
+    metatable of the given table. If the original metatable has a
+    "__metatable" field, raises an error.
+
   2.20. tonumber ~
                                                 *lua.tonumber*
+>
+    tonumber (e [, base])
+<
+    When called with no base, tonumber tries to convert its argument to a
+    number. If the argument is already a number or a string convertible to a
+    number (see `http://www.lua.org/manual/5.2/manual.html#3.4.2`), then
+    tonumber returns this number; otherwise, it returns `nil`.
+
   2.21. tostring ~
                                                 *lua.tostring*
+>
+    tostring (v)
+<
+    When called with base, then e should be a string to be interpreted as an
+    integer numeral in that base. The base may be any integer between 2 and
+    36, inclusive. In bases above 10, the letter 'A' (in either upper or lower
+    case) represents 10, 'B' represents 11, and so forth, with 'Z'
+    representing 35. If the string e is not a valid numeral in the given base,
+    the function returns `nil`.
+
   2.22. type ~
                                                 *lua.type*
+>
+    type (v)
+<
+    Returns the type of its only argument, coded as a string. The possible
+    results of this function are "nil" (a string, not the value nil),
+    "number", "string", "boolean", "table", "function", "thread", and
+    "userdata".
+
   2.23. xpcall ~
                                                 *lua.xpcall*
+>
+    xpcall (f, msgh [, arg1, ···])
+<
+    This function is similar to |lua.pcall|, except that it sets a new message
+    handler msgh.
+
 ==============================================================================
 3.  bit32 ~
                                             *lua.bit32*
   3.1.  bit32.arshift ~
                                                 *lua.bit32.arshift*
+>
+    bit32.arshift (x, disp)
+<
+    Returns the number x shifted disp bits to the right. The number disp may
+    be any representable integer. Negative displacements shift to the left.
+
+    This shift operation is what is called arithmetic shift. Vacant bits on
+    the left are filled with copies of the higher bit of x; vacant bits on the
+    right are filled with zeros. In particular, displacements with absolute
+    values higher than 31 result in zero or 0xFFFFFFFF (all original bits are
+    shifted out).
+
   3.2.  bit32.band ~
                                                 *lua.bit32.band*
+>
+    bit32.band (···)
+<
+    Returns the bitwise and of its operands.
+
   3.3.  bit32.bnot ~
                                                 *lua.bit32.bnot*
+>
+    bit32.bnot (x)
+<
+    Returns the bitwise negation of x. For any integer x, the following
+    identity holds:
+>
+        assert(bit32.bnot(x) == (-1 - x) % 2^32)
+<
   3.4.  bit32.bor ~
                                                 *lua.bit32.bor*
+>
+    bit32.bor (···)
+<
+    Returns the bitwise or of its operands.
+
   3.5.  bit32.btest ~
                                                 *lua.bit32.btest*
+>
+    bit32.btest (···)
+<
+    Returns a boolean signaling whether the bitwise and of its operands is
+    different from zero.
+
   3.6.  bit32.bxor ~
                                                 *lua.bit32.bxor*
+>
+    bit32.bxor (···)
+<
+    Returns the bitwise exclusive or of its operands.
+
   3.7.  bit32.extract ~
                                                 *lua.bit32.extract*
+>
+    bit32.extract (n, field [, width])
+<
+    Returns the unsigned number formed by the bits field to field + width - 1
+    from n. Bits are numbered from 0 (least significant) to 31 (most
+    significant). All accessed bits must be in the range [0, 31].
+
+    The default for width is 1.
+
   3.8.  bit32.lrotate ~
                                                 *lua.bit32.lrotate*
+>
+    bit32.lrotate (x, disp)
+<
+    Returns the number x rotated disp bits to the left. The number disp may be
+    any representable integer.
+
+    For any valid displacement, the following identity holds:
+>
+        assert(bit32.lrotate(x, disp) == bit32.lrotate(x, disp % 32))
+<
+    In particular, negative displacements rotate to the right.
+
   3.9.  bit32.lshift ~
                                                 *lua.bit32.lshift*
+>
+    bit32.lshift (x, disp)
+<
+    Returns the number x shifted disp bits to the left. The number disp may be
+    any representable integer. Negative displacements shift to the right. In
+    any direction, vacant bits are filled with zeros. In particular,
+    displacements with absolute values higher than 31 result in zero (all bits
+    are shifted out).
+
+    For positive displacements, the following equality holds:
+>
+        assert(bit32.lshift(b, disp) == (b * 2^disp) % 2^32)
+<
   3.10. bit32.replace ~
                                                 *lua.bit32.replace*
+>
+    bit32.replace (n, v, field [, width])
+<
+    Returns a copy of n with the bits field to field + width - 1 replaced by
+    the value v. See |lua.bit32.extract| for details about field and width.
+
   3.11. bit32.rrotate ~
                                                 *lua.bit32.rrotate*
+>
+    bit32.rrotate (x, disp)
+<
+    Returns the number x rotated disp bits to the right. The number disp may
+    be any representable integer.
+
+    For any valid displacement, the following identity holds:
+>
+        assert(bit32.rrotate(x, disp) == bit32.rrotate(x, disp % 32))
+<
+    In particular, negative displacements rotate to the left.
+
   3.12. bit32.rshift ~
                                                 *lua.bit32.rshift*
+>
+    bit32.rshift (x, disp)
+<
+    Returns the number x shifted disp bits to the right. The number disp may
+    be any representable integer. Negative displacements shift to the left. In
+    any direction, vacant bits are filled with zeros. In particular,
+    displacements with absolute values higher than 31 result in zero (all bits
+    are shifted out).
+
+    For positive displacements, the following equality holds:
+>
+        assert(bit32.rshift(b, disp) == math.floor(b % 2^32 / 2^disp))
+<
+    This shift operation is what is called logical shift.
 
 ==============================================================================
 4.  coroutine ~
