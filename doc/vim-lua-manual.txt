@@ -1,0 +1,588 @@
+*vim-lua-manual.txt*      Lua 5.2 Reference Manual             *lua-manual*
+
+                              Lua Manual
+
+1.  Global Variables                        |lua.GlobalVariables|
+  1.1.  _G                                      |lua._G|
+  1.2.  _VERSION                                |lua._VERSION|
+2.  Basic Functions                         |lua.GlobalFunctions|
+  2.1.  assert                                  |lua.assert|
+  2.2.  collectgarbage                          |lua.collectgarbage|
+  2.3.  dofile                                  |lua.dofile|
+  2.4.  error                                   |lua.error|
+  2.5.  getmetatable                            |lua.getmetatable|
+  2.6.  ipairs                                  |lua.ipairs|
+  2.7.  load                                    |lua.load|
+  2.8.  loadfile                                |lua.loadfile|
+  2.9.  next                                    |lua.next|
+  2.10. pairs                                   |lua.pairs|
+  2.11. pcall                                   |lua.pcall|
+  2.12. print                                   |lua.print|
+  2.13. rawequal                                |lua.rawequal|
+  2.14. rawget                                  |lua.rawget|
+  2.15. rawlen                                  |lua.rawlen|
+  2.16. rawset                                  |lua.rawset|
+  2.17. require                                 |lua.require|
+  2.18. select                                  |lua.select|
+  2.19. setmetatable                            |lua.setmetatable|
+  2.20. tonumber                                |lua.tonumber|
+  2.21. tostring                                |lua.tostring|
+  2.22. type                                    |lua.type|
+  2.23. xpcall                                  |lua.xpcall|
+3.  bit32                                   |lua.bit32|
+  3.1.  bit32.arshift                           |lua.bit32.arshift|
+  3.2.  bit32.band                              |lua.bit32.band|
+  3.3.  bit32.bnot                              |lua.bit32.bnot|
+  3.4.  bit32.bor                               |lua.bit32.bor|
+  3.5.  bit32.btest                             |lua.bit32.btest|
+  3.6.  bit32.bxor                              |lua.bit32.bxor|
+  3.7.  bit32.extract                           |lua.bit32.extract|
+  3.8.  bit32.lrotate                           |lua.bit32.lrotate|
+  3.9.  bit32.lshift                            |lua.bit32.lshift|
+  3.10. bit32.replace                           |lua.bit32.replace|
+  3.11. bit32.rrotate                           |lua.bit32.rrotate|
+  3.12. bit32.rshift                            |lua.bit32.rshift|
+4.  coroutine                               |lua.coroutine|
+  4.1.  coroutine.create                        |lua.coroutine.create|
+  4.2.  coroutine.resume                        |lua.coroutine.resume|
+  4.3.  coroutine.running                       |lua.coroutine.running|
+  4.4.  coroutine.status                        |lua.coroutine.status|
+  4.5.  coroutine.wrap                          |lua.coroutine.wrap|
+  4.6.  coroutine.yield                         |lua.coroutine.yield|
+5.  debug                                   |lua.debug|
+  5.1.  debug.debug                             |lua.debug.debug|
+  5.2.  debug.getuservalue                      |lua.debug.getuservalue|
+  5.3.  debug.gethook                           |lua.debug.gethook|
+  5.4.  debug.getinfo                           |lua.debug.getinfo|
+  5.5.  debug.getlocal                          |lua.debug.getlocal|
+  5.6.  debug.getmetatable                      |lua.debug.getmetatable|
+  5.7.  debug.getregistry                       |lua.debug.getregistry|
+  5.8.  debug.getupvalue                        |lua.debug.getupvalue|
+  5.9.  debug.setuservalue                      |lua.debug.setuservalue|
+  5.10. debug.sethook                           |lua.debug.sethook|
+  5.11. debug.setlocal                          |lua.debug.setlocal|
+  5.12. debug.setmetatable                      |lua.debug.setmetatable|
+  5.13. debug.setupvalue                        |lua.debug.setupvalue|
+  5.14. debug.traceback                         |lua.debug.traceback|
+  5.15. debug.upvalueid                         |lua.debug.upvalueid|
+  5.16. debug.upvaluejoin                       |lua.debug.upvaluejoin|
+6.  file                                    |lua.file|
+  6.1.  file:close                              |lua.file:close|
+  6.2.  file:flush                              |lua.file:flush|
+  6.3.  file:lines                              |lua.file:lines|
+  6.4.  file:read                               |lua.file:read|
+  6.5.  file:seek                               |lua.file:seek|
+  6.6.  file:setvbuf                            |lua.file:setvbuf|
+  6.7.  file:write                              |lua.file:write|
+7.  io                                      |lua.io|
+  7.1.  io.close                                |lua.io.close|
+  7.2.  io.flush                                |lua.io.flush|
+  7.3.  io.input                                |lua.io.input|
+  7.4.  io.lines                                |lua.io.lines|
+  7.5.  io.open                                 |lua.io.open|
+  7.6.  io.output                               |lua.io.output|
+  7.7.  io.popen                                |lua.io.popen|
+  7.8.  io.read                                 |lua.io.read|
+  7.9.  io.stderr                               |lua.io.stderr|
+  7.10. io.stdin                                |lua.io.stdin|
+  7.11. io.stdout                               |lua.io.stdout|
+  7.12. io.tmpfile                              |lua.io.tmpfile|
+  7.13. io.type                                 |lua.io.type|
+  7.14. io.write                                |lua.io.write|
+8.  math                                    |lua.math|
+  8.1.  math.abs                                |lua.math.abs|
+  8.2.  math.acos                               |lua.math.acos|
+  8.3.  math.asin                               |lua.math.asin|
+  8.4.  math.atan                               |lua.math.atan|
+  8.5.  math.atan2                              |lua.math.atan2|
+  8.6.  math.ceil                               |lua.math.ceil|
+  8.7.  math.cos                                |lua.math.cos|
+  8.8.  math.cosh                               |lua.math.cosh|
+  8.9.  math.deg                                |lua.math.deg|
+  8.10. math.exp                                |lua.math.exp|
+  8.11. math.floor                              |lua.math.floor|
+  8.12. math.fmod                               |lua.math.fmod|
+  8.13. math.frexp                              |lua.math.frexp|
+  8.14. math.huge                               |lua.math.huge|
+  8.15. math.ldexp                              |lua.math.ldexp|
+  8.16. math.log                                |lua.math.log|
+  8.17. math.max                                |lua.math.max|
+  8.18. math.min                                |lua.math.min|
+  8.19. math.modf                               |lua.math.modf|
+  8.20. math.pi                                 |lua.math.pi|
+  8.21. math.pow                                |lua.math.pow|
+  8.22. math.rad                                |lua.math.rad|
+  8.23. math.random                             |lua.math.random|
+  8.24. math.randomseed                         |lua.math.randomseed|
+  8.25. math.sin                                |lua.math.sin|
+  8.26. math.sinh                               |lua.math.sinh|
+  8.27. math.sqrt                               |lua.math.sqrt|
+  8.28. math.tan                                |lua.math.tan|
+  8.29. math.tanh                               |lua.math.tanh|
+9.  os                                      |lua.os|
+  9.1.  os.clock                                |lua.os.clock|
+  9.2.  os.date                                 |lua.os.date|
+  9.3.  os.difftime                             |lua.os.difftime|
+  9.4.  os.execute                              |lua.os.execute|
+  9.5.  os.exit                                 |lua.os.exit|
+  9.6.  os.getenv                               |lua.os.getenv|
+  9.7.  os.remove                               |lua.os.remove|
+  9.8.  os.rename                               |lua.os.rename|
+  9.9.  os.setlocale                            |lua.os.setlocale|
+  9.10. os.time                                 |lua.os.time|
+  9.11. os.tmpname                              |lua.os.tmpname|
+10. package                                 |lua.package|
+  10.1. package.config                          |lua.package.config|
+  10.2. package.cpath                           |lua.package.cpath|
+  10.3. package.loaded                          |lua.package.loaded|
+  10.4. package.loadlib                         |lua.package.loadlib|
+  10.5. package.path                            |lua.package.path|
+  10.6. package.preload                         |lua.package.preload|
+  10.7. package.searchers                       |lua.package.searchers|
+  10.8. package.searchpath                      |lua.package.searchpath|
+11. string                                  |lua.string|
+  11.1.  string.byte                            |lua.string.byte|
+  11.2.  string.char                            |lua.string.char|
+  11.3.  string.dump                            |lua.string.dump|
+  11.4.  string.find                            |lua.string.find|
+  11.5.  string.format                          |lua.string.format|
+  11.6.  string.gmatch                          |lua.string.gmatch|
+  11.7.  string.gsub                            |lua.string.gsub|
+  11.8.  string.len                             |lua.string.len|
+  11.9.  string.lower                           |lua.string.lower|
+  11.10. string.match                           |lua.string.match|
+  11.11. string.rep                             |lua.string.rep|
+  11.12. string.reverse                         |lua.string.reverse|
+  11.13. string.sub                             |lua.string.sub|
+  11.14. string.upper                           |lua.string.upper|
+12. table                                   |lua.table|
+  12.1.  table.concat                           |lua.table.concat|
+  12.2.  table.insert                           |lua.table.insert|
+  12.3.  table.pack                             |lua.table.pack|
+  12.4.  table.remove                           |lua.table.remove|
+  12.5.  table.sort                             |lua.table.sort|
+  12.6.  table.unpack                           |lua.table.unpack|
+
+==============================================================================
+1.  Global Variables ~
+                                            *lua.GlobalVariables*
+
+  1.1.  _G ~
+                                                *lua._G*
+    A global variable (not a function) that holds the global environment (see
+    `http://www.lua.org/manual/5.2/manual.html#2.2`). Lua itself does not use
+    this variable; changing its value does not affect any environment, nor
+    vice-versa.
+
+  1.2.  _VERSION ~
+                                                *lua._VERSION*
+    A global variable (not a function) that holds a string containing the
+    current interpreter version. The current contents of this variable is
+    `Lua_5.2`.
+
+==============================================================================
+2.  Basic Functions ~
+                                            *lua.GlobalFunctions*
+
+  2.1.  assert ~
+                                                *lua.assert*
+    Issues an error when the value of its argument v is false (i.e., `nil` or
+    `false`); otherwise, returns all its arguments. message is an error message;
+    when absent, it defaults to "assertion failed!"
+
+  2.2.  collectgarbage ~
+                                                *lua.collectgarbage*
+     This function is a generic interface to the garbage collector. It
+     performs different functions according to its first argument, opt:
+
+        `"collect"`: performs a full garbage-collection cycle. This is the
+        default option.
+
+        `"stop"`: stops automatic execution of the garbage collector. The
+        collector will run only when explicitly invoked, until a call to
+        restart it.
+
+        `"restart"`: restarts automatic execution of the garbage collector.
+
+        `"count"`: returns the total memory in use by Lua (in Kbytes) and a
+        second value with the total memory in bytes modulo 1024. The first
+        value has a fractional part, so the following equality is always true:
+>
+             k, b = collectgarbage("count")
+             assert(k*1024 == math.floor(k)*1024 + b)
+<
+        `"step"`: performs a garbage-collection step. The step "size" is
+        controlled by arg (larger values mean more steps) in a non-specified
+        way. If you want to control the step size you must experimentally tune
+        the value of arg. Returns `true` if the step finished a collection
+        cycle.
+
+        `"setpause"`: sets arg as the new value for the pause of the collector
+        (see `http://www.lua.org/manual/5.2/manual.html#2.5`). Returns the
+        previous value for pause.
+
+        `"setstepmul"`: sets arg as the new value for the step multiplier of
+        the collector (see `http://www.lua.org/manual/5.2/manual.html#2.5`).
+        Returns the previous value for step.
+
+        `"isrunning"`: returns a boolean that tells whether the collector is
+        running (i.e., not stopped).
+
+        `"generational"`: changes the collector to generational mode. This is
+        an experimental feature (see
+        `http://www.lua.org/manual/5.2/manual.html#2.5`).
+
+        `"incremental"`: changes the collector to incremental mode. This is
+        the default mode.
+
+  2.3.  dofile ~
+                                                *lua.dofile*
+    Opens the named file and executes its contents as a Lua chunk. When called
+    without arguments, dofile executes the contents of the standard input
+    (stdin). Returns all values returned by the chunk. In case of errors,
+    dofile propagates the error to its caller (that is, dofile does not run in
+    protected mode).
+
+  2.4.  error ~
+                                                *lua.error*
+    Terminates the last protected function called and returns message as the
+    error message. Function error never returns.
+
+    Usually, error adds some information about the error position at the
+    beginning of the message, if the message is a string. The level argument
+    specifies how to get the error position. With level 1 (the default), the
+    error position is where the error function was called. Level 2 points the
+    error to where the function that called error was called; and so on.
+    Passing a level 0 avoids the addition of error position information to the
+    message.
+
+  2.5.  getmetatable ~
+                                                *lua.getmetatable*
+    If object does not have a metatable, returns nil. Otherwise, if the
+    object's metatable has a "__metatable" field, returns the associated
+    value. Otherwise, returns the metatable of the given object.
+
+  2.6.  ipairs ~
+                                                *lua.ipairs*
+
+  2.7.  load ~
+                                                *lua.load*
+  2.8.  loadfile ~
+                                                *lua.loadfile*
+  2.9.  next ~
+                                                *lua.next*
+  2.10. pairs ~
+                                                *lua.pairs*
+  2.11. pcall ~
+                                                *lua.pcall*
+  2.12. print ~
+                                                *lua.print*
+  2.13. rawequal ~
+                                                *lua.rawequal*
+  2.14. rawget ~
+                                                *lua.rawget*
+  2.15. rawlen ~
+                                                *lua.rawlen*
+  2.16. rawset ~
+                                                *lua.rawset*
+  2.17. require ~
+                                                *lua.require*
+  2.18. select ~
+                                                *lua.select*
+  2.19. setmetatable ~
+                                                *lua.setmetatable*
+  2.20. tonumber ~
+                                                *lua.tonumber*
+  2.21. tostring ~
+                                                *lua.tostring*
+  2.22. type ~
+                                                *lua.type*
+  2.23. xpcall ~
+                                                *lua.xpcall*
+==============================================================================
+3.  bit32 ~
+                                            *lua.bit32*
+  3.1.  bit32.arshift ~
+                                                *lua.bit32.arshift*
+  3.2.  bit32.band ~
+                                                *lua.bit32.band*
+  3.3.  bit32.bnot ~
+                                                *lua.bit32.bnot*
+  3.4.  bit32.bor ~
+                                                *lua.bit32.bor*
+  3.5.  bit32.btest ~
+                                                *lua.bit32.btest*
+  3.6.  bit32.bxor ~
+                                                *lua.bit32.bxor*
+  3.7.  bit32.extract ~
+                                                *lua.bit32.extract*
+  3.8.  bit32.lrotate ~
+                                                *lua.bit32.lrotate*
+  3.9.  bit32.lshift ~
+                                                *lua.bit32.lshift*
+  3.10. bit32.replace ~
+                                                *lua.bit32.replace*
+  3.11. bit32.rrotate ~
+                                                *lua.bit32.rrotate*
+  3.12. bit32.rshift ~
+                                                *lua.bit32.rshift*
+
+==============================================================================
+4.  coroutine ~
+                                            *lua.coroutine*
+  4.1.  coroutine.create ~
+                                                *lua.coroutine.create*
+  4.2.  coroutine.resume ~
+                                                *lua.coroutine.resume*
+  4.3.  coroutine.running ~
+                                                *lua.coroutine.running*
+  4.4.  coroutine.status ~
+                                                *lua.coroutine.status*
+  4.5.  coroutine.wrap ~
+                                                *lua.coroutine.wrap*
+  4.6.  coroutine.yield ~
+                                                *lua.coroutine.yield*
+
+==============================================================================
+5.  debug ~
+                                            *lua.debug*
+  5.1.  debug.debug ~
+                                                *lua.debug.debug*
+  5.2.  debug.getuservalue ~
+                                                *lua.debug.getuservalue*
+  5.3.  debug.gethook ~
+                                                *lua.debug.gethook*
+  5.4.  debug.getinfo ~
+                                                *lua.debug.getinfo*
+  5.5.  debug.getlocal ~
+                                                *lua.debug.getlocal*
+  5.6.  debug.getmetatable ~
+                                                *lua.debug.getmetatable*
+  5.7.  debug.getregistry ~
+                                                *lua.debug.getregistry*
+  5.8.  debug.getupvalue ~
+                                                *lua.debug.getupvalue*
+  5.9.  debug.setuservalue ~
+                                                *lua.debug.setuservalue*
+  5.10. debug.sethook ~
+                                                *lua.debug.sethook*
+  5.11. debug.setlocal ~
+                                                *lua.debug.setlocal*
+  5.12. debug.setmetatable ~
+                                                *lua.debug.setmetatable*
+  5.13. debug.setupvalue ~
+                                                *lua.debug.setupvalue*
+  5.14. debug.traceback ~
+                                                *lua.debug.traceback*
+  5.15. debug.upvalueid ~
+                                                *lua.debug.upvalueid*
+  5.16. debug.upvaluejoin ~
+                                                *lua.debug.upvaluejoin*
+
+==============================================================================
+6.  file ~
+                                            *lua.file*
+  6.1.  file:close ~
+                                                *lua.file:close*
+  6.2.  file:flush ~
+                                                *lua.file:flush*
+  6.3.  file:lines ~
+                                                *lua.file:lines*
+  6.4.  file:read ~
+                                                *lua.file:read*
+  6.5.  file:seek ~
+                                                *lua.file:seek*
+  6.6.  file:setvbuf ~
+                                                *lua.file:setvbuf*
+  6.7.  file:write ~
+                                                *lua.file:write*
+
+==============================================================================
+7.  io ~
+                                            *lua.io*
+  7.1.  io.close ~
+                                                *lua.io.close*
+  7.2.  io.flush ~
+                                                *lua.io.flush*
+  7.3.  io.input ~
+                                                *lua.io.input*
+  7.4.  io.lines ~
+                                                *lua.io.lines*
+  7.5.  io.open ~
+                                                *lua.io.open*
+  7.6.  io.output ~
+                                                *lua.io.output*
+  7.7.  io.popen ~
+                                                *lua.io.popen*
+  7.8.  io.read ~
+                                                *lua.io.read*
+  7.9.  io.stderr ~
+                                                *lua.io.stderr*
+  7.10. io.stdin ~
+                                                *lua.io.stdin*
+  7.11. io.stdout ~
+                                                *lua.io.stdout*
+  7.12. io.tmpfile ~
+                                                *lua.io.tmpfile*
+  7.13. io.type ~
+                                                *lua.io.type*
+  7.14. io.write ~
+                                                *lua.io.write*
+
+==============================================================================
+8.  math ~
+                                            *lua.math*
+  8.1.  math.abs ~
+                                                *lua.math.abs*
+  8.2.  math.acos ~
+                                                *lua.math.acos*
+  8.3.  math.asin ~
+                                                *lua.math.asin*
+  8.4.  math.atan ~
+                                                *lua.math.atan*
+  8.5.  math.atan2 ~
+                                                *lua.math.atan2*
+  8.6.  math.ceil ~
+                                                *lua.math.ceil*
+  8.7.  math.cos ~
+                                                *lua.math.cos*
+  8.8.  math.cosh ~
+                                                *lua.math.cosh*
+  8.9.  math.deg ~
+                                                *lua.math.deg*
+  8.10. math.exp ~
+                                                *lua.math.exp*
+  8.11. math.floor ~
+                                                *lua.math.floor*
+  8.12. math.fmod ~
+                                                *lua.math.fmod*
+  8.13. math.frexp ~
+                                                *lua.math.frexp*
+  8.14. math.huge ~
+                                                *lua.math.huge*
+  8.15. math.ldexp ~
+                                                *lua.math.ldexp*
+  8.16. math.log ~
+                                                *lua.math.log*
+  8.17. math.max ~
+                                                *lua.math.max*
+  8.18. math.min ~
+                                                *lua.math.min*
+  8.19. math.modf ~
+                                                *lua.math.modf*
+  8.20. math.pi ~
+                                                *lua.math.pi*
+  8.21. math.pow ~
+                                                *lua.math.pow*
+  8.22. math.rad ~
+                                                *lua.math.rad*
+  8.23. math.random ~
+                                                *lua.math.random*
+  8.24. math.randomseed ~
+                                                *lua.math.randomseed*
+  8.25. math.sin ~
+                                                *lua.math.sin*
+  8.26. math.sinh ~
+                                                *lua.math.sinh*
+  8.27. math.sqrt ~
+                                                *lua.math.sqrt*
+  8.28. math.tan ~
+                                                *lua.math.tan*
+  8.29. math.tanh ~
+                                                *lua.math.tanh*
+
+==============================================================================
+9.  os ~
+                                            *lua.os*
+  9.1.  os.clock ~
+                                                *lua.os.clock*
+  9.2.  os.date ~
+                                                *lua.os.date*
+  9.3.  os.difftime ~
+                                                *lua.os.difftime*
+  9.4.  os.execute ~
+                                                *lua.os.execute*
+  9.5.  os.exit ~
+                                                *lua.os.exit*
+  9.6.  os.getenv ~
+                                                *lua.os.getenv*
+  9.7.  os.remove ~
+                                                *lua.os.remove*
+  9.8.  os.rename ~
+                                                *lua.os.rename*
+  9.9.  os.setlocale ~
+                                                *lua.os.setlocale*
+  9.10. os.time ~
+                                                *lua.os.time*
+  9.11. os.tmpname ~
+                                                *lua.os.tmpname*
+==============================================================================
+10. package ~
+                                            *lua.package*
+  10.1. package.config ~
+                                                *lua.package.config*
+  10.2. package.cpath ~
+                                                *lua.package.cpath*
+  10.3. package.loaded ~
+                                                *lua.package.loaded*
+  10.4. package.loadlib ~
+                                                *lua.package.loadlib*
+  10.5. package.path ~
+                                                *lua.package.path*
+  10.6. package.preload ~
+                                                *lua.package.preload*
+  10.7. package.searchers ~
+                                                *lua.package.searchers*
+  10.8. package.searchpath ~
+                                                *lua.package.searchpath*
+
+==============================================================================
+11. string ~
+                                            *lua.string*
+
+  11.1.  string.byte ~
+                                                *lua.string.byte*
+  11.2.  string.char ~
+                                                *lua.string.char*
+  11.3.  string.dump ~
+                                                *lua.string.dump*
+  11.4.  string.find ~
+                                                *lua.string.find*
+  11.5.  string.format ~
+                                                *lua.string.format*
+  11.6.  string.gmatch ~
+                                                *lua.string.gmatch*
+  11.7.  string.gsub ~
+                                                *lua.string.gsub*
+  11.8.  string.len ~
+                                                *lua.string.len*
+  11.9.  string.lower ~
+                                                *lua.string.lower*
+  11.10. string.match ~
+                                                *lua.string.match*
+  11.11. string.rep ~
+                                                *lua.string.rep*
+  11.12. string.reverse ~
+                                                *lua.string.reverse*
+  11.13. string.sub ~
+                                                *lua.string.sub*
+  11.14. string.upper ~
+                                                *lua.string.upper*
+
+==============================================================================
+12. table ~
+                                            *lua.table*
+
+  12.1.  table.concat ~
+                                                *lua.table.concat*
+  12.2.  table.insert ~
+                                                *lua.table.insert*
+  12.3.  table.pack ~
+                                                *lua.table.pack*
+  12.4.  table.remove ~
+                                                *lua.table.remove*
+  12.5.  table.sort ~
+                                                *lua.table.sort*
+  12.6.  table.unpack ~
+                                                *lua.table.unpack*
+
